@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="geolocate.js"></script>
+<script>
+var watch = navigator.geolocation.watchPosition(function(position) {
+  console.log("Loc",position.coords.latitude, position.coords.longitude);
+});
+
+
+/*function sendFakeLocation() {
+	geolocate.send({lat: 54.980206086231, lng: 82.898068362003});
+}
+
+function fakeOn() {
+	navigator.geolocation.clearWatch(watch)
+	geolocate.use()
+	watch = navigator.geolocation.watchPosition(function(position) {
+	  console.log("Loc",position.coords.latitude, position.coords.longitude);
+	});	
+}
+
+function fakeOff() {
+	navigator.geolocation.clearWatch(watch)
+	geolocate.restore()
+	watch = navigator.geolocation.watchPosition(function(position) {
+	  console.log("Loc",position.coords.latitude, position.coords.longitude);
+	});
+}*/
+
+function triggerFakeOn(){
+	var myFrame = document.getElementById("app");
+	//myFrame.contentWindow.fakeOn() 
+	myFrame.contentWindow.eval("console.log('1');var succ=watch.success;navigator.geolocation.clearWatch(watch);geolocate.use();watch=navigator.geolocation.watchPosition(succ);");
+}
+
+function triggerFakeOff(){
+	var myFrame = document.getElementById("app");
+	//myFrame.contentWindow.fakeOff()
+	myFrame.contentWindow.eval("console.log('3');var succ=watch.success;navigator.geolocation.clearWatch(watch);geolocate.restore();watch=navigator.geolocation.watchPosition(succ);");
+}
+
+function triggerSendFake(){
+	var myFrame = document.getElementById("app");
+	//myFrame.contentWindow.sendFakeLocation() 
+	myFrame.contentWindow.eval("console.log('2');geolocate.send({lat: 54.980206086231, lng: 82.898068362003});");
+}
+
+</script>
+</head>
+<body>
+
+<button onclick="triggerSendFake()">Fake</button>
+
+<button onclick="triggerFakeOn()">Fake On</button>
+<button onclick="triggerFakeOff()">Fake Off</button>
+
+<iframe id="app" src="./iframe.html" />
+
+<script>
+var myFrame = document.getElementById("app");
+
+
+
+myFrame.contentWindow.sendFakeLocation = function(){
+	geolocate.send({lat: 54.980206086231, lng: 82.898068362003});
+}
+myFrame.contentWindow.fakeOn = function(){
+	navigator.geolocation.clearWatch(watch)
+	geolocate.use()
+	watch = navigator.geolocation.watchPosition(function(position) {
+	  console.log("Loc",position.coords.latitude, position.coords.longitude);
+	});	
+}
+myFrame.contentWindow.fakeOff = function(){
+	navigator.geolocation.clearWatch(watch)
+	geolocate.restore()
+	watch = navigator.geolocation.watchPosition(function(position) {
+	  console.log("Loc",position.coords.latitude, position.coords.longitude);
+	});
+}
+
+
+
+</script>
+
+
+</body>
+</html>

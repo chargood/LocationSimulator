@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="geolocate.js"></script>
+</head>
+<body>
+
+<div>Location</div>
+<div id="loc"></div>
+
+<script>
+
+var watch = navigator.geolocation.watchPosition(function(position) {
+  showLocation(position)
+});
+
+var locdiv = document.getElementById("loc");
+
+function showLocation(position) {
+  locdiv.innerHTML += "Loc "+position.coords.latitude+" "+position.coords.longitude+"<br/>";
+}
+
+</script>
+
+</body>
+</html>
